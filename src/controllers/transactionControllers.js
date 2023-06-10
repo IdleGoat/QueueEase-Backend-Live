@@ -62,6 +62,8 @@ const transactionController = {
 
       await pool.query(insertTransactionQuery, insertTransactionValues);
 
+      
+      
       res.status(201).json({ message: 'Transaction created successfully' });
     } catch (error) {
       console.error('Error creating transaction:', error);
