@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const status = require('../utils/status');
 
 const customerController = {
-  createCustomer: async (req, res) => {
+  createCustomer: async (req, res,io) => {
     try {
       const {
         full_name,
@@ -57,10 +57,10 @@ const customerController = {
       RETURNING queue_id
       `;
 
-const process_status = status.in_queue;
-const createQueueValues = [customer_id, process_status];
+      const process_status = status.in_queue;
+      const createQueueValues = [customer_id, process_status];
 
-const result2 = await pool.query(createQueueQuery, createQueueValues);
+      const result2 = await pool.query(createQueueQuery, createQueueValues);
 
       io.emit('queueUpdated');
       res.status(201).json({ customer_id: newCustomerId });
