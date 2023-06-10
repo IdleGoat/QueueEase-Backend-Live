@@ -9,7 +9,8 @@ const queueRoutes = require('./src/routes/queueRoutes');
 const transactionRoutes = require('./src/routes/transactionRoutes');
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const { Server } = require('socket.io');
+const io = new Server(http);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +29,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 testDatabaseConnection();
 
 io.on('connection', (socket) => {
@@ -38,8 +38,9 @@ io.on('connection', (socket) => {
     console.log('A user disconnected');
   });
 });
+
 // Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
