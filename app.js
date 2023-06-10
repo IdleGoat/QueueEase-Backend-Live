@@ -10,7 +10,12 @@ const transactionRoutes = require('./src/routes/transactionRoutes');
 const app = express();
 const http = require('http').createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(http);
+const io = new Server(http, { 
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  },
+});
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
