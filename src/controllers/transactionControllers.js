@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { pool } = require('../config/config');
+const status = require('../utils/status');
 
 const transactionController = {
   createTransaction: async (req, res) => {
@@ -62,8 +63,13 @@ const transactionController = {
 
       await pool.query(insertTransactionQuery, insertTransactionValues);
 
-      
-      
+      const updateStatusQuery = `
+        UPDATE Queue SET process_status = $1 WHERE customer_id = $2
+      `;
+      const updateStatusValues = [status.finished,customer_id];
+
+      await pool.query(updateStatusQuery, updateStatusValues);
+
       res.status(201).json({ message: 'Transaction created successfully' });
     } catch (error) {
       console.error('Error creating transaction:', error);
