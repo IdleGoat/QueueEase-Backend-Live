@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { io } = require('../../app');
+const { io } = require('../../app').io;
 
 
 const queueController = require('../controllers/queueControllers');
