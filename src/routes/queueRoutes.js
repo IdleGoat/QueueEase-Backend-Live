@@ -12,11 +12,8 @@ module.exports = function (io) {
 
   router.get('/get/:id', queueController.getQueueById);
 
-  router.put('/take', queueController.takeQueueById, (req, res) => {
-    // Emit the socket event
-    io.emit('queueUpdated');
-    console.log('Queue taken');
-    res.status(200).json({ message: 'Queue taken' });
+  router.put('/take', (req, res) => {
+    queueController.takeQueueById(req, res, io);
   });
 
   router.put('/finish/:id', queueController.finishQueueById);

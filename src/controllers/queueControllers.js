@@ -28,14 +28,13 @@ const queueController = {
     }
   },
 
-  getAllQueues: async (req, res,io) => {
+  getAllQueues: async (req, res) => {
     try {
       const getAllQueuesQuery = `SELECT Queue.queue_id, Queue.process_status, Customer.full_name
       FROM Queue
       JOIN Customer ON Queue.customer_id = Customer.customer_id`;
       const result = await pool.query(getAllQueuesQuery);
       const queues = result.rows;
-      io.emit('queueUpdated');
       res.status(200).json(queues);
     } catch (error) {
       console.error('Error getting all queues', error);
@@ -57,7 +56,7 @@ const queueController = {
     }
   },
 
-  takeQueueById: async (req, res) => {
+  takeQueueById: async (req, res, io) => {
     try {
       const { teller_id, desk_id } = req.body;
 
@@ -86,7 +85,7 @@ const queueController = {
         `UPDATE Queue SET teller_id = $1, process_status = $2, desk_id = $3 WHERE queue_id = $4`,
         [teller_id, status.processing, desk_id, queueIdToUpdate]
       );
-
+      io.emit('queueUpdated');
       res.status(200).json({queue_id: queueIdToUpdate, message: 'Queue entry updated successfully' });
     } catch (error) {
       console.error('Error updating queue entry:', error);

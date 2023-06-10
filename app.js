@@ -24,10 +24,10 @@ app.use(cors());
 
 // Routes
 app.use('/users', usersRoutes);
-app.use('/customers', customerRoutes);
+app.use('/customers', customerRoutes(io));
 app.use('/tellerdesk', tellerDeskRoutes);
 app.use('/queue', queueRoutes(io));
-app.use('/transaction', transactionRoutes);
+app.use('/transaction', transactionRoutes(io));
 
 app.use((req, res, next) => {
   req.io = io;
