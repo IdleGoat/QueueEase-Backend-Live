@@ -26,7 +26,7 @@ app.use(cors());
 app.use('/users', usersRoutes);
 app.use('/customers', customerRoutes);
 app.use('/tellerdesk', tellerDeskRoutes);
-app.use('/queue', queueRoutes);
+app.use('/queue', queueRoutes(io));
 app.use('/transaction', transactionRoutes);
 
 app.use((req, res, next) => {
@@ -51,8 +51,3 @@ http.listen(PORT, () => {
 });
 
 app.set('io', io);
-
-module.exports = {
-  app,
-  io,
-};
