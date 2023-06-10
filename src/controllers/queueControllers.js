@@ -137,6 +137,19 @@ const queueController = {
       res.status(500).json({ error: 'Internal server error' });
     }
     
+  },
+
+  getWaitingQueue : async (req, res) => {
+    try {
+      const { id } = req.params;
+      const getWaitingQueueQuery = `SELECT * FROM Queue WHERE process_status = 'IN QUEUE' ORDER BY queue_id`;
+      const result = await pool.query(getWaitingQueueQuery);
+      const queue = result.rows;
+      res.status(200).json(queue);
+    } catch (error) {
+      console.error('Error getting queue by id', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
   
 

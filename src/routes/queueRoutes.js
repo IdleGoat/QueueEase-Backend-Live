@@ -18,6 +18,8 @@ router.put('/take', queueController.takeQueueById, (req, res) => {
 
 router.put('/finish/:id', queueController.finishQueueById);
 
+router.get('/getWaitingQueue', queueController.getWaitingQueue);
+
 router.get('/getByTeller', queueController.getQueueByTeller);
 
 module.exports = router;
