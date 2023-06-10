@@ -85,7 +85,7 @@ const queueController = {
         `UPDATE Queue SET teller_id = $1, process_status = $2, desk_id = $3 WHERE queue_id = $4`,
         [teller_id, status.processing, desk_id, queueIdToUpdate]
       );
-      io.emit('queueUpdated');
+      io.emit('take', desk_id, queueIdToUpdate);
       res.status(200).json({queue_id: queueIdToUpdate, message: 'Queue entry updated successfully' });
     } catch (error) {
       console.error('Error updating queue entry:', error);
