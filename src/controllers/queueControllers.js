@@ -142,7 +142,13 @@ const queueController = {
   getWaitingQueue : async (req, res) => {
     try {
       const { id } = req.params;
-      const getWaitingQueueQuery = `SELECT * FROM Queue WHERE process_status = 'IN QUEUE' ORDER BY queue_id`;
+      //create query to take all in queue with join from customer to get name
+      const getWaitingQueueQuery = `SELECT Queue.queue_id, Customer.full_name
+      FROM Queue
+      JOIN Customer ON Queue.customer_id = Customer.customer_id
+      WHERE Queue.process_status = 'IN QUEUE'`;
+
+      
       const result = await pool.query(getWaitingQueueQuery);
       const queue = result.rows;
       res.status(200).json(queue);
