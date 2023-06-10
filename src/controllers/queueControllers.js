@@ -28,13 +28,14 @@ const queueController = {
     }
   },
 
-  getAllQueues: async (req, res) => {
+  getAllQueues: async (req, res,io) => {
     try {
       const getAllQueuesQuery = `SELECT Queue.queue_id, Queue.process_status, Customer.full_name
       FROM Queue
       JOIN Customer ON Queue.customer_id = Customer.customer_id`;
       const result = await pool.query(getAllQueuesQuery);
       const queues = result.rows;
+      io.emit('queueUpdated');
       res.status(200).json(queues);
     } catch (error) {
       console.error('Error getting all queues', error);

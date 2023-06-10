@@ -6,11 +6,8 @@ const queueController = require('../controllers/queueControllers');
 module.exports = function (io) {
   router.post('/add', queueController.createQueue);
 
-  router.get('/getAll', queueController.getAllQueues, (req, res) => {
-    // Emit the socket event
-    io.emit('queueUpdated');
-    console.log('Queue taken');
-    res.status(200).json({ message: 'Queue taken' });
+  router.get('/getAll', (req, res) => {
+    queueController.getAllQueues(req, res, io);
   });
 
   router.get('/get/:id', queueController.getQueueById);
