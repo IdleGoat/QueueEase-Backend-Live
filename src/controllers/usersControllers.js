@@ -190,6 +190,31 @@ const usersController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+  verify : async (req, res) => {
+
+    const token = req.headers.authorization;
+
+  // Check if the token exists
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    // Verify and decode the token
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+
+    // If the token is valid, the user is authenticated
+    // You can perform additional checks or fetch user data from the database if needed
+
+    res.status(200).json({ authenticated: true });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+  }
+
+
+
 };
 
 module.exports = usersController;
