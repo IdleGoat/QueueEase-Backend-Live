@@ -22,5 +22,11 @@ module.exports = function (io) {
 
   router.get('/getByTeller', queueController.getQueueByTeller);
 
+  router.get('/reset', (req, res) => {
+    queueController.reset(req, res, io);
+  });
+
+ 
+
   return router;
 };

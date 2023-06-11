@@ -156,6 +156,36 @@ const queueController = {
       console.error('Error getting queue by id', error);
       res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+  reset : async (req, res) => {
+    try {
+      // Query to fetch all queue info
+      const selectQuery = `
+        SELECT *
+        FROM table_name
+      `;
+  
+      // Execute the select query
+      const selectResult = await pool.query(selectQuery);
+  
+      // Get the fetched queue info
+      const queueInfo = selectResult.rows;
+  
+      // Query to truncate the table
+      const truncateQuery = `
+        TRUNCATE TABLE table_name RESTART IDENTITY;
+      `;
+  
+      // Execute the truncate query
+      await pool.query(truncateQuery);
+      io.emit('queueUpdated');
+      // Send the fetched queue info as the response
+      res.status(200).json(queueInfo);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
   
 

@@ -9,4 +9,6 @@ router.put('/checkout', tellerDeskController.checkOut);
 
 router.get('/checkDeskStatus', tellerDeskController.checkDeskStatus);
 
+router.get('/getTellerInfo', tellerDeskController.getTellerInfo);
+
 module.exports = router;
