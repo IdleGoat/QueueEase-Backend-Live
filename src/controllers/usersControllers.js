@@ -193,7 +193,7 @@ const usersController = {
 
   verify : async (req, res) => {
 
-    const token = req.body;
+    const token = req.body.token;
     console.log(token);
   // Check if the token exists
   if (!token) {
