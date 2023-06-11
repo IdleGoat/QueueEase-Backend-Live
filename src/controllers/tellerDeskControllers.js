@@ -134,7 +134,7 @@ const tellerDeskController = {
           a.account_id AS teller_id,
           a.full_name AS Nama,
           a.email,
-          SUM(d.duration) AS "total_duration",
+          SUM(d.duration) AS "total_duration"
         FROM account a
         LEFT JOIN teller_desk d ON a.account_id = d.teller_id
         LEFT JOIN transaction t ON a.account_id = t.teller_id
