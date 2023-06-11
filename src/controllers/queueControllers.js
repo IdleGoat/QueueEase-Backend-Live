@@ -158,7 +158,7 @@ const queueController = {
     }
   },
 
-  reset : async (req, res) => {
+  reset : async (req, res,io) => {
     try {
       // Query to fetch all queue info
       const selectQuery = `
