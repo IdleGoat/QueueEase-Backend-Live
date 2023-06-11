@@ -194,7 +194,7 @@ const usersController = {
   verify : async (req, res) => {
 
     const token = req.body;
-
+    console.log(token);
   // Check if the token exists
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
@@ -203,7 +203,7 @@ const usersController = {
   try {
     // Verify and decode the token
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-
+    console.log(decoded)
     // If the token is valid, the user is authenticated
     // You can perform additional checks or fetch user data from the database if needed
 
