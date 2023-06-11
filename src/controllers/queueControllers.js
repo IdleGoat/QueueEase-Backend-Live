@@ -163,7 +163,7 @@ const queueController = {
       // Query to fetch all queue info
       const selectQuery = `
         SELECT *
-        FROM table_name
+        FROM queue
       `;
   
       // Execute the select query
@@ -174,7 +174,7 @@ const queueController = {
   
       // Query to truncate the table
       const truncateQuery = `
-        TRUNCATE TABLE table_name RESTART IDENTITY;
+        TRUNCATE TABLE queue RESTART IDENTITY;
       `;
   
       // Execute the truncate query
